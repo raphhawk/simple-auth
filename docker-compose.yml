@@ -1,0 +1,26 @@
+version: "3.9"  
+
+services:
+  app:
+    build:
+      context: .  
+    ports:
+      - "8080:8080"  
+    environment:
+      - JWT_SECRET_KEY=mysecretkey  
+    depends_on:
+      - db  
+    networks:
+      - mynetwork
+
+  db:
+    image: nouchka/sqlite3:latest  
+    volumes:
+      - ./data:/data  
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge  
+
