@@ -3,7 +3,7 @@
 ## Run api
 ```bash 
     # Start Application
-    docker-compose up -d
+    docker compose up --build -d
 
     # Stop Application
     docker-compose down

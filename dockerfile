@@ -1,15 +1,13 @@
-FROM golang:1.20 as builder
+FROM golang:latest
 
 WORKDIR /app
 
-COPY . .
+COPY go.mod go.sum ./
 
 RUN go mod tidy
-RUN go build -o main ./cmd/api/*.go
 
-FROM alpine:latest
-WORKDIR /root/
+COPY . .
 
-COPY --from=builder /app/main .
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build -o main ./cmd/api/*.go
 
 CMD ["./main"]

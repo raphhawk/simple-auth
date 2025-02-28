@@ -5,18 +5,19 @@ import (
 	"os"
 	"simple-auth/internal/models"
 
-	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo/v4"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 func main() {
 	// Setup Database
-	db, err := gorm.Open("sqlite3", "test.db")
+	db, err := gorm.Open(sqlite.Open("./test.db"), &gorm.Config{})
 	if err != nil {
 		fmt.Println("Failed to connect to database")
 		os.Exit(1)
 	}
-	defer db.Close()
+	// defer db.Close()
 
 	db.AutoMigrate(&models.User{})
 
